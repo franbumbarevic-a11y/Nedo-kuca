@@ -157,11 +157,11 @@ export default async function LocationPage({ params }: Props) {
             height="100%"
             style={{ border: 0, position: 'absolute', inset: 0 }}
             allowFullScreen
-            loading="lazy"
+            // loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             title={t(locale, 'location_map_label')}
           />
-        </div>
+          </div>
       </section>
 
       {/* Activities */}
