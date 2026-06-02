@@ -119,8 +119,7 @@ export async function POST(req: NextRequest) {
             <td style="padding:32px 40px 36px;">
               <hr style="border:none;border-top:1px solid #e8e4dd;margin:0 0 24px;" />
               <p style="margin:0;font-size:11px;color:#8a8a88;font-family:'Georgia',serif;line-height:1.6;">
-                Krcka kuća · Skrbčići 20, Otok Krk, Hrvatska<br />
-                <a href="mailto:fran.bumbarevic@gmail.com" style="color:#4A7A91;text-decoration:none;">fran.bumbarevic@gmail.com</a>
+                Krcka kuća · Skrbčići 20, Otok Krk, Hrvatska
               </p>
             </td>
           </tr>
@@ -135,7 +134,7 @@ export async function POST(req: NextRequest) {
   try {
     await transporter.sendMail({
       from: `"Krcka kuća" <${process.env.EMAIL_USER}>`,
-      to: 'fran.bumbarevic@gmail.com',
+      to: process.env.EMAIL_TO ?? process.env.EMAIL_USER,
       replyTo: email,
       subject: `Booking enquiry – ${fmtDate(checkin)} → ${fmtDate(checkout)} · ${name}`,
       html,
