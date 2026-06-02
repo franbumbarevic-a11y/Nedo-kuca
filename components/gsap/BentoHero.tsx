@@ -97,7 +97,7 @@ export default function BentoHero({ images, title }: Props) {
         id="gallery-bento"
       >
         {displayed.map((img, i) => (
-          <div key={i} className="gallery__item" style={{ position: 'relative' }}>
+          <div key={i} className="gallery__item">
             <Image
               src={img.src}
               alt={img.alt}
@@ -106,11 +106,6 @@ export default function BentoHero({ images, title }: Props) {
               className="object-cover"
               priority={i < 3}
             />
-            {img.num !== undefined && (
-              <span style={{ position: 'absolute', top: 8, left: 8, zIndex: 20, background: 'rgba(0,0,0,0.75)', color: '#fff', fontSize: 18, fontWeight: 700, padding: '2px 8px', borderRadius: 4, pointerEvents: 'none' }}>
-                {img.num}
-              </span>
-            )}
           </div>
         ))}
       </div>

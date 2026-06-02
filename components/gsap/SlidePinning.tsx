@@ -144,11 +144,6 @@ export default function SlidePinning({ panels }: Props) {
           sizes="50vw"
           className="object-cover"
         />
-        {panel.image.num !== undefined && (
-          <span style={{ position: 'absolute', top: 8, left: 8, zIndex: 20, background: 'rgba(0,0,0,0.75)', color: '#fff', fontSize: 18, fontWeight: 700, padding: '2px 8px', borderRadius: 4, pointerEvents: 'none' }}>
-            {panel.image.num}
-          </span>
-        )}
       </div>
     );
 

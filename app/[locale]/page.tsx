@@ -97,11 +97,6 @@ export default async function HomePage({ params }: Props) {
                 sizes="33vw"
                 className="object-cover"
               />
-              {block.image.num !== undefined && (
-                <span style={{ position: 'absolute', top: 8, left: 8, zIndex: 20, background: 'rgba(0,0,0,0.75)', color: '#fff', fontSize: 18, fontWeight: 700, padding: '2px 8px', borderRadius: 4, pointerEvents: 'none' }}>
-                  {block.image.num}
-                </span>
-              )}
               <div
                 style={{
                   position: 'absolute',

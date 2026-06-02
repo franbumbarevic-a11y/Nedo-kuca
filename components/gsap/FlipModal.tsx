@@ -150,11 +150,6 @@ export default function FlipModal({ images }: Props) {
                   sizes="(max-width: 768px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 hover:scale-105"
                 />
-                {img.num !== undefined && (
-                  <span style={{ position: 'absolute', top: 8, left: 8, zIndex: 20, background: 'rgba(0,0,0,0.75)', color: '#fff', fontSize: 18, fontWeight: 700, padding: '2px 8px', borderRadius: 4, pointerEvents: 'none' }}>
-                    {img.num}
-                  </span>
-                )}
               </div>
             </div>
           );
