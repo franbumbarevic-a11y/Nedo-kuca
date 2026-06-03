@@ -42,18 +42,21 @@ export default async function LocationPage({ params }: Props) {
       text: t(locale, 'location_hiking_text'),
       image: images.garden,
       reverse: false,
+      url: 'https://caminocroatia.com/hr/camino-krk/',
     },
     {
       title: t(locale, 'location_swimming_title'),
       text: t(locale, 'location_swimming_text'),
       image: images.terrace,
       reverse: true,
+      url: null,
     },
     {
       title: t(locale, 'location_island_title'),
       text: t(locale, 'location_island_text'),
-      image: images.parking,
+      image: { src: '/images/sotours-boat.webp', alt: 'Boat rental — So Tours, Valbiska' },
       reverse: false,
+      url: 'https://www.sotours.hr/en',
     },
   ];
 
@@ -248,6 +251,24 @@ export default async function LocationPage({ params }: Props) {
                 >
                   {act.text}
                 </p>
+                {act.url && (
+                  <a
+                    href={act.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-block',
+                      marginTop: '1.5rem',
+                      fontSize: '0.9rem',
+                      color: 'var(--blue-dark)',
+                      fontWeight: 500,
+                      letterSpacing: '0.06em',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {act.url.includes('sotours') ? '→ So Tours' : '→ Camino Krk'}
+                  </a>
+                )}
               </div>
             </div>
           ))}
