@@ -115,6 +115,8 @@ const translations = {
     house_amenity_beach: 'Plaža pješice',
     house_amenity_pets: 'Kućni ljubimci dobrodošli',
 
+    house_about_title: 'O kući',
+
     house_price: 'Cijena prema sezoni — pišite za upit.',
     house_book_btn: 'Rezervirajte →',
 
@@ -240,6 +242,8 @@ const translations = {
     house_amenity_beach: 'Strand zu Fuß erreichbar',
     house_amenity_pets: 'Haustiere willkommen',
 
+    house_about_title: 'Über das Haus',
+
     house_price: 'Preis je nach Saison — Anfrage schreiben.',
     house_book_btn: 'Buchen →',
 
@@ -362,6 +366,8 @@ const translations = {
     house_amenity_cellar: 'Stone cellar',
     house_amenity_beach: 'Beach on foot',
     house_amenity_pets: 'Pets welcome',
+
+    house_about_title: 'About',
 
     house_price: 'Price by season — write for a quote.',
     house_book_btn: 'Book now →',

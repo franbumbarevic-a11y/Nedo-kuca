@@ -63,6 +63,19 @@ export default async function HousePage({ params }: Props) {
     { label: t(locale, 'house_pets'), val: t(locale, 'house_pets_val') },
   ];
 
+  const amenities = [
+    t(locale, 'house_amenity_kitchen'),
+    t(locale, 'house_amenity_terrace'),
+    t(locale, 'house_amenity_garden'),
+    t(locale, 'house_amenity_parking'),
+    t(locale, 'house_amenity_fireplace'),
+    t(locale, 'house_amenity_linen'),
+    t(locale, 'house_amenity_bbq'),
+    t(locale, 'house_amenity_fruits'),
+    t(locale, 'house_amenity_outdoor'),
+    t(locale, 'house_amenity_pets'),
+  ];
+
   return (
     <>
       {/* Hero */}
@@ -101,112 +114,115 @@ export default async function HousePage({ params }: Props) {
         </div>
       </section>
 
-      {/* Narrative scroll: SlidePinning */}
-      <SlidePinning panels={panels} />
-
-      {/* Specs */}
-      <section style={{ background: 'var(--stone)', padding: 'clamp(4rem, 8vw, 8rem) clamp(1.5rem, 10vw, 12rem)' }}>
-        <h2
-          style={{
-            fontSize: 'clamp(0.75rem, 1vw, 0.9rem)',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'var(--blue-dark)',
-            marginBottom: '3rem',
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 400,
-          }}
-        >
-          {t(locale, 'house_specs_title')}
-        </h2>
-        <dl>
-          {specs.map((spec, i) => (
-            <div
-              key={i}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'baseline',
-                padding: '1.25rem 0',
-                borderBottom: '1px solid var(--mist)',
-              }}
-            >
-              <dt style={{ fontSize: '1rem', color: 'var(--ink)', opacity: 0.65 }}>
-                {spec.label}
-              </dt>
-              <dd
+      {/* Combined Specs + Amenities Table */}
+      <section style={{ background: 'var(--stone)', padding: 'clamp(3rem, 6vw, 6rem) clamp(1.5rem, 10vw, 12rem)' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th
+                colSpan={2}
                 style={{
-                  fontSize: '0.9375rem',
-                  color: 'var(--ink)',
+                  fontSize: 'clamp(0.7rem, 0.85vw, 0.85rem)',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: 'var(--blue-dark)',
+                  fontFamily: "'Inter', sans-serif",
                   fontWeight: 400,
-                  maxWidth: '28ch',
-                  textAlign: 'right',
+                  textAlign: 'left',
+                  paddingBottom: '1.5rem',
+                  paddingRight: '3rem',
+                  borderBottom: '1px solid var(--mist)',
                 }}
               >
-                {spec.val}
-              </dd>
-            </div>
-          ))}
-        </dl>
+                {t(locale, 'house_specs_title')}
+              </th>
+              <th
+                style={{
+                  fontSize: 'clamp(0.7rem, 0.85vw, 0.85rem)',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: 'var(--blue-dark)',
+                  fontFamily: "'Inter', sans-serif",
+                  fontWeight: 400,
+                  textAlign: 'left',
+                  paddingBottom: '1.5rem',
+                  borderBottom: '1px solid var(--mist)',
+                }}
+              >
+                {t(locale, 'house_amenities_title')}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {specs.map((spec, i) => (
+              <tr key={i}>
+                <td
+                  style={{
+                    padding: '1.1rem 0',
+                    paddingRight: '1.5rem',
+                    borderBottom: '1px solid var(--mist)',
+                    fontSize: '1rem',
+                    color: 'var(--ink)',
+                    opacity: 0.65,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {spec.label}
+                </td>
+                <td
+                  style={{
+                    padding: '1.1rem 0',
+                    paddingRight: '3rem',
+                    borderBottom: '1px solid var(--mist)',
+                    fontSize: '0.9375rem',
+                    color: 'var(--ink)',
+                    fontWeight: 400,
+                  }}
+                >
+                  {spec.val}
+                </td>
+                <td
+                  style={{
+                    padding: '1.1rem 0',
+                    borderBottom: '1px solid var(--mist)',
+                    fontSize: '0.9375rem',
+                    color: 'var(--ink)',
+                  }}
+                >
+                  <span style={{ color: 'var(--blue-dark)', marginRight: '0.75rem' }}>—</span>
+                  {amenities[i]}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
 
-
-
-      {/* Amenities */}
-      <section style={{ background: 'var(--mist)', padding: 'clamp(4rem, 8vw, 8rem) clamp(1.5rem, 10vw, 12rem)' }}>
+      {/* About title */}
+      <section
+        style={{
+          background: 'var(--ink)',
+          padding: 'clamp(3rem, 5vw, 5rem) clamp(1.5rem, 10vw, 12rem)',
+          textAlign: 'center',
+        }}
+      >
         <h2
           style={{
-            fontSize: 'clamp(0.75rem, 1vw, 0.9rem)',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'var(--blue-dark)',
-            marginBottom: '3rem',
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 400,
-          }}
-        >
-          {t(locale, 'house_amenities_title')}
-        </h2>
-        <ul
-          style={{
-            listStyle: 'none',
-            padding: 0,
+            fontSize: 'clamp(2rem, 4vw, 4.5rem)',
+            color: 'var(--stone)',
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontWeight: 500,
+            fontStyle: 'italic',
+            letterSpacing: '-0.01em',
             margin: 0,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-            gap: '0',
           }}
         >
-          {([
-            'house_amenity_kitchen',
-            'house_amenity_terrace',
-            'house_amenity_garden',
-            'house_amenity_parking',
-            'house_amenity_fireplace',
-            'house_amenity_linen',
-            'house_amenity_bbq',
-            'house_amenity_fruits',
-            'house_amenity_outdoor',
-            'house_amenity_pets',
-          ] as const).map((key) => (
-            <li
-              key={key}
-              style={{
-                padding: '1.1rem 0',
-                borderBottom: '1px solid var(--mist)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                fontSize: '0.9375rem',
-                color: 'var(--ink)',
-              }}
-            >
-              <span style={{ color: 'var(--blue-dark)', fontSize: '1rem', flexShrink: 0 }}>—</span>
-              {t(locale, key)}
-            </li>
-          ))}
-        </ul>
+          {t(locale, 'house_about_title')}
+        </h2>
       </section>
+
+      {/* Narrative scroll: SlidePinning */}
+      <SlidePinning panels={panels} />
 
       {/* Pricing + Book CTA */}
       <section
