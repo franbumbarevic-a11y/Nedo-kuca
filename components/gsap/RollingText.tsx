@@ -82,7 +82,7 @@ export default function RollingText({ lines }: Props) {
     >
       <div className="rolling-tube">
         {lines.map((line, i) => (
-          <p key={i} className="rolling-line" style={{ color: 'var(--stone)' }}>
+          <p key={i} className="rolling-line" style={{ color: 'var(--blue-dark)' }}>
             {line}
           </p>
         ))}

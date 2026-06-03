@@ -62,7 +62,7 @@ export default async function HomePage({ params }: Props) {
       {/* Section 2: Rolling text */}
       <section
         style={{
-          background: 'var(--ink)',
+          background: 'var(--mist)',
           height: '40vh',
           display: 'flex',
           alignItems: 'center',
