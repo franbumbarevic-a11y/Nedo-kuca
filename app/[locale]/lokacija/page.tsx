@@ -67,6 +67,7 @@ export default async function LocationPage({ params }: Props) {
           fill
           sizes="100vw"
           className="object-cover"
+          style={{ objectPosition: 'center 30%' }}
           priority
         />
         <div
