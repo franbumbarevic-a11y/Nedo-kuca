@@ -139,7 +139,10 @@ export default async function LocationPage({ params }: Props) {
                 textDecoration: 'none',
               }}
             >
-              <span style={{ fontSize: '1.0625rem', color: 'var(--ink)', opacity: 0.75 }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.0625rem', color: 'var(--ink)', opacity: 0.75 }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0, color: 'var(--blue-dark)', opacity: 1 }}>
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
                 {d.label}
               </span>
               <span
