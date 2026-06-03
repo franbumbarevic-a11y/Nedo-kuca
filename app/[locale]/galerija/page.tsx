@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { isValidLocale, Locale, t } from '@/lib/i18n';
-import { galleryImages } from '@/lib/images';
+import { galleryLayout } from '@/lib/images';
 import FlipModal from '@/components/gsap/FlipModal';
 
 interface Props {
@@ -56,7 +56,7 @@ export default async function GalleryPage({ params }: Props) {
       </div>
 
       <div style={{ background: 'var(--stone)' }}>
-        <FlipModal images={galleryImages} />
+        <FlipModal items={galleryLayout} />
       </div>
     </>
   );

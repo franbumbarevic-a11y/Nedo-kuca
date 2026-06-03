@@ -1,20 +1,34 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import Image from 'next/image';
-import { ImageEntry } from '@/lib/images';
+import { GalleryItem } from '@/lib/images';
 
 interface Props {
-  images: ImageEntry[];
+  items: GalleryItem[];
 }
 
-export default function FlipModal({ images }: Props) {
+export default function FlipModal({ items }: Props) {
   const gridRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const modalContentRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const activeIndexRef = useRef<number | undefined>(undefined);
   const boxContentRefs = useRef<HTMLDivElement[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  /* ── Responsive columns ── */
+  useEffect(() => {
+    let mm: ReturnType<typeof import('gsap').gsap.matchMedia>;
+    const init = async () => {
+      const { default: gsap } = await import('gsap');
+      mm = gsap.matchMedia();
+      mm.add('(max-width: 768px)', () => setIsMobile(true));
+      mm.add('(min-width: 769px)', () => setIsMobile(false));
+    };
+    init();
+    return () => mm?.revert();
+  }, []);
 
   const handleClose = useCallback(async () => {
     const idx = activeIndexRef.current;
@@ -48,7 +62,7 @@ export default function FlipModal({ images }: Props) {
   }, []);
 
   useEffect(() => {
-    boxContentRefs.current = boxContentRefs.current.slice(0, images.length);
+    boxContentRefs.current = boxContentRefs.current.slice(0, items.length);
 
     const setupListeners = async () => {
       const { default: gsap } = await import('gsap');
@@ -62,12 +76,12 @@ export default function FlipModal({ images }: Props) {
         cells.forEach((cell) => {
           gsap.from(cell, {
             opacity: 0,
-            y: 30,
-            duration: 0.8,
+            y: 24,
+            duration: 0.7,
             ease: 'power2.out',
             scrollTrigger: {
               trigger: cell,
-              start: 'top 90%',
+              start: 'top 92%',
             },
           });
         });
@@ -80,16 +94,14 @@ export default function FlipModal({ images }: Props) {
               await handleClose();
               return;
             }
-
             const state = Flip.getState(box);
             if (modalContentRef.current) {
               modalContentRef.current.appendChild(box);
             }
             activeIndexRef.current = i;
-
             gsap.set(modalRef.current, { autoAlpha: 1 });
             Flip.from(state, { duration: 0.7, ease: 'power1.inOut' });
-            gsap.to(overlayRef.current, { autoAlpha: 0.65, duration: 0.35 });
+            gsap.to(overlayRef.current, { autoAlpha: 0.72, duration: 0.35 });
           });
         });
       }, gridRef.current ?? undefined);
@@ -109,45 +121,53 @@ export default function FlipModal({ images }: Props) {
       ctx?.revert();
       document.removeEventListener('keydown', handleEsc);
     };
-  }, [images, handleClose]);
+  }, [items, handleClose]);
+
+  const cols = isMobile ? 2 : 4;
+  const rowHeight = isMobile ? 'clamp(120px, 44vw, 240px)' : 'clamp(160px, 16vw, 260px)';
 
   return (
     <>
-      {/* Gallery grid */}
+      {/* ── Bento grid ── */}
       <div
         ref={gridRef}
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '0.75rem',
-          padding: '5vw',
+          gridTemplateColumns: `repeat(${cols}, 1fr)`,
+          gridAutoRows: rowHeight,
+          gap: '3px',
+          padding: '3px',
+          background: 'var(--mist)',
         }}
       >
-        {images.map((img, i) => {
-          // Alternate aspect ratios for editorial feel; no span-2 to avoid grid holes
-          const aspects = ['3/2', '2/3', '3/2', '2/3', '3/2', '1/1'];
-          const aspect = aspects[i % aspects.length];
+        {items.map((item, i) => {
+          // On mobile collapse all span-2 to full width (span 2 of 2 cols = full row)
+          const span = item.cols;
           return (
             <div
               key={i}
               className="gallery-cell"
               style={{
+                gridColumn: `span ${span}`,
                 position: 'relative',
-                aspectRatio: aspect,
                 overflow: 'hidden',
                 cursor: 'pointer',
+                background: 'var(--mist)',
               }}
             >
-              {/* position:absolute so height is always defined for Next Image fill */}
               <div
                 ref={(el) => { if (el) boxContentRefs.current[i] = el; }}
                 style={{ position: 'absolute', inset: 0 }}
               >
                 <Image
-                  src={img.src}
-                  alt={img.alt}
+                  src={item.img.src}
+                  alt={item.img.alt}
                   fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
+                  sizes={
+                    item.cols === 2
+                      ? '(max-width: 768px) 100vw, 50vw'
+                      : '(max-width: 768px) 50vw, 25vw'
+                  }
                   className="object-cover transition-transform duration-500 hover:scale-105"
                 />
               </div>
@@ -156,7 +176,7 @@ export default function FlipModal({ images }: Props) {
         })}
       </div>
 
-      {/* Modal */}
+      {/* ── Lightbox modal ── */}
       <div
         ref={modalRef}
         style={{
@@ -186,16 +206,16 @@ export default function FlipModal({ images }: Props) {
           style={{
             position: 'relative',
             zIndex: 1,
-            width: '85vw',
-            height: '80vh',
+            width: '88vw',
+            height: '82vh',
           }}
         />
         <button
           onClick={handleClose}
           style={{
             position: 'absolute',
-            top: '2rem',
-            right: '2rem',
+            top: '1.5rem',
+            right: '1.75rem',
             color: 'var(--stone)',
             background: 'none',
             border: 'none',
@@ -203,6 +223,7 @@ export default function FlipModal({ images }: Props) {
             cursor: 'pointer',
             zIndex: 2001,
             lineHeight: 1,
+            opacity: 0.8,
           }}
           aria-label="Close"
         >
