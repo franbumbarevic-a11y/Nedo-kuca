@@ -27,13 +27,13 @@ export default async function LocationPage({ params }: Props) {
   const base = `/${locale}`;
 
   const distances = [
-    { label: t(locale, 'location_d6'), val: t(locale, 'location_d6_val') },
-    { label: t(locale, 'location_d7'), val: t(locale, 'location_d7_val') },
-    { label: t(locale, 'location_d1'), val: t(locale, 'location_d1_val') },
-    { label: t(locale, 'location_d3'), val: t(locale, 'location_d3_val') },
-    { label: t(locale, 'location_d2'), val: t(locale, 'location_d2_val') },
-    { label: t(locale, 'location_d4'), val: t(locale, 'location_d4_val') },
-    { label: t(locale, 'location_d5'), val: t(locale, 'location_d5_val') },
+    { label: t(locale, 'location_d6'), val: t(locale, 'location_d6_val'), url: 'https://maps.google.com/?q=Minimarket+Ivinčić,+Skrpčići,+Krk' },
+    { label: t(locale, 'location_d7'), val: t(locale, 'location_d7_val'), url: 'https://maps.google.com/?q=Restoran+Ivinčić,+Skrpčići,+Krk' },
+    { label: t(locale, 'location_d1'), val: t(locale, 'location_d1_val'), url: 'https://maps.google.com/?q=Valbiska+Ferry+Port,+Krk' },
+    { label: t(locale, 'location_d3'), val: t(locale, 'location_d3_val'), url: 'https://maps.google.com/?q=Plaža+Jert,+Krk,+Croatia' },
+    { label: t(locale, 'location_d2'), val: t(locale, 'location_d2_val'), url: 'https://maps.google.com/?q=Krk,+Croatia' },
+    { label: t(locale, 'location_d4'), val: t(locale, 'location_d4_val'), url: 'https://maps.google.com/?q=Rijeka,+Croatia' },
+    { label: t(locale, 'location_d5'), val: t(locale, 'location_d5_val'), url: 'https://maps.google.com/?q=Rijeka+Airport,+Croatia' },
   ];
 
   const activities = [
@@ -125,14 +125,18 @@ export default async function LocationPage({ params }: Props) {
         {/* Single-column list with visible spacing between rows */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
           {distances.map((d, i) => (
-            <div
+            <a
               key={i}
+              href={d.url}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
                 padding: '1.5rem 0',
                 borderBottom: '1px solid var(--mist)',
+                textDecoration: 'none',
               }}
             >
               <span style={{ fontSize: '1.0625rem', color: 'var(--ink)', opacity: 0.75 }}>
@@ -148,7 +152,7 @@ export default async function LocationPage({ params }: Props) {
               >
                 {d.val}
               </span>
-            </div>
+            </a>
           ))}
         </div>
       </section>
