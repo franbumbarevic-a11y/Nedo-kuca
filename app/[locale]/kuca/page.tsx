@@ -1,12 +1,24 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { isValidLocale, Locale, t } from '@/lib/i18n';
 import { images } from '@/lib/images';
 import SlidePinning from '@/components/gsap/SlidePinning';
 
 interface Props {
   params: Promise<{ locale: string }>;
+}
+
+const PAGE_TITLE: Record<string, string> = {
+  hr: 'Kuća | Krcka kuća',
+  de: 'Haus | Krcka kuća',
+  en: 'House | Krcka kuća',
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return { title: PAGE_TITLE[locale] ?? 'Kuća | Krcka kuća' };
 }
 
 export default async function HousePage({ params }: Props) {
@@ -41,10 +53,14 @@ export default async function HousePage({ params }: Props) {
   const specs = [
     { label: t(locale, 'house_guests'), val: t(locale, 'house_guests_val') },
     { label: t(locale, 'house_bedrooms'), val: t(locale, 'house_bedrooms_val') },
+    { label: t(locale, 'house_beds'), val: t(locale, 'house_beds_val') },
     { label: t(locale, 'house_bathrooms'), val: t(locale, 'house_bathrooms_val') },
+    { label: t(locale, 'house_checkin_spec'), val: t(locale, 'house_checkin_spec_val') },
+    { label: t(locale, 'house_checkout_spec'), val: t(locale, 'house_checkout_spec_val') },
     { label: t(locale, 'house_terrace'), val: t(locale, 'house_terrace_val') },
     { label: t(locale, 'house_parking'), val: t(locale, 'house_parking_val') },
     { label: t(locale, 'house_wifi'), val: t(locale, 'house_wifi_val') },
+    { label: t(locale, 'house_pets'), val: t(locale, 'house_pets_val') },
   ];
 
   return (
@@ -171,6 +187,7 @@ export default async function HousePage({ params }: Props) {
             'house_amenity_bbq',
             'house_amenity_fruits',
             'house_amenity_outdoor',
+            'house_amenity_pets',
           ] as const).map((key) => (
             <li
               key={key}

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { isValidLocale, Locale, t } from '@/lib/i18n';
 import { heroImages, images } from '@/lib/images';
 import BentoHero from '@/components/gsap/BentoHero';
@@ -8,6 +9,17 @@ import RollingText from '@/components/gsap/RollingText';
 
 interface Props {
   params: Promise<{ locale: string }>;
+}
+
+const PAGE_TITLE: Record<string, string> = {
+  hr: 'Krcka kuća — Skrbčići, otok Krk',
+  de: 'Krcka kuća — Skrbčići, Insel Krk',
+  en: 'Krcka kuća — Skrbčići, island of Krk',
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return { title: PAGE_TITLE[locale] ?? 'Krcka kuća — Skrbčići, otok Krk' };
 }
 
 export default async function HomePage({ params }: Props) {
@@ -174,6 +186,27 @@ export default async function HomePage({ params }: Props) {
           </blockquote>
         ))}
       </section>
+
+      {/* Airbnb social proof */}
+      <div
+        style={{
+          background: 'var(--mist)',
+          padding: '0 clamp(1.5rem, 10vw, 12rem) clamp(3rem, 6vw, 5rem)',
+          textAlign: 'center',
+        }}
+      >
+        <p
+          style={{
+            fontSize: '0.8rem',
+            letterSpacing: '0.08em',
+            color: 'var(--ink)',
+            opacity: 0.45,
+            fontFamily: "'Inter', sans-serif",
+          }}
+        >
+          {t(locale, 'airbnb_social_proof')}
+        </p>
+      </div>
 
       {/* Section 6: Book CTA */}
       <section

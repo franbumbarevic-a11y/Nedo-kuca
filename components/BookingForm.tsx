@@ -23,7 +23,10 @@ const LABELS = {
     nights: (n: number) => `${n} ${n === 1 ? 'noć' : 'noći'}`,
     clear: 'Poništi', booked: 'Zauzeto', available: 'Slobodno',
     offseason: 'Zatvoreno (izvan sezone)',
-    sending: 'Šalje se…', sent: 'Upit poslan!', error: 'Greška — pokušaj ponovno.',
+    sending: 'Šalje se…',
+    sent: 'Hvala! Vaš upit je primljen. Odgovaramo unutar 24 sata.',
+    error: 'Nešto je pošlo po krivu. Pokušajte ponovno ili nas kontaktirajte na info@krcka-kuca.hr',
+    guestsHelper: 'Maksimalni kapacitet: 4 gosta',
     months: ['Siječanj','Veljača','Ožujak','Travanj','Svibanj','Lipanj','Srpanj','Kolovoz','Rujan','Listopad','Studeni','Prosinac'],
     days: ['Po','Ut','Sr','Če','Pe','Su','Ne'],
   },
@@ -36,7 +39,10 @@ const LABELS = {
     nights: (n: number) => `${n} ${n === 1 ? 'Nacht' : 'Nächte'}`,
     clear: 'Zurücksetzen', booked: 'Belegt', available: 'Frei',
     offseason: 'Geschlossen (Nebensaison)',
-    sending: 'Wird gesendet…', sent: 'Anfrage gesendet!', error: 'Fehler — bitte erneut versuchen.',
+    sending: 'Wird gesendet…',
+    sent: 'Danke! Ihre Anfrage ist eingegangen. Wir antworten innerhalb von 24 Stunden.',
+    error: 'Etwas ist schiefgelaufen. Bitte erneut versuchen oder uns unter info@krcka-kuca.hr kontaktieren.',
+    guestsHelper: 'Maximale Kapazität: 4 Gäste',
     months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
     days: ['Mo','Di','Mi','Do','Fr','Sa','So'],
   },
@@ -49,7 +55,10 @@ const LABELS = {
     nights: (n: number) => `${n} ${n === 1 ? 'night' : 'nights'}`,
     clear: 'Clear', booked: 'Booked', available: 'Available',
     offseason: 'Closed (off-season)',
-    sending: 'Sending…', sent: 'Enquiry sent!', error: 'Error — please try again.',
+    sending: 'Sending…',
+    sent: 'Thank you! Your enquiry has been received. We reply within 24 hours.',
+    error: 'Something went wrong. Please try again or contact us at info@krcka-kuca.hr',
+    guestsHelper: 'Maximum capacity: 4 guests',
     months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
     days: ['Mo','Tu','We','Th','Fr','Sa','Su'],
   },
@@ -353,15 +362,12 @@ export default function BookingForm({ bookedRanges, locale }: Props) {
 
   if (submitState === 'sent') {
     return (
-      <div style={{ textAlign: 'center', padding: '4rem 0' }}>
+      <div style={{ padding: '2rem 0' }}>
         <p style={{
           fontFamily: "'Playfair Display', Georgia, serif",
-          fontSize: '1.5rem', color: 'var(--ink)', marginBottom: '1rem',
+          fontSize: '1.25rem', color: 'var(--ink)',
         }}>
           {lbl.sent}
-        </p>
-        <p style={{ fontSize: '0.875rem', color: 'var(--ink)', opacity: 0.5, fontFamily: "'Inter', sans-serif" }}>
-          {lbl.response}
         </p>
       </div>
     );
@@ -491,7 +497,15 @@ export default function BookingForm({ bookedRanges, locale }: Props) {
 
       <label style={labelStyle}>
         <span style={labelSpanStyle}>{lbl.guests}</span>
-        <input type="number" name="guests" min="1" max="4" defaultValue="2" required style={inputStyle} />
+        <select name="guests" required defaultValue="2" style={{ ...inputStyle, cursor: 'pointer' }}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+        <span style={{ fontSize: '0.7rem', color: 'var(--ink)', opacity: 0.4, fontFamily: "'Inter', sans-serif", letterSpacing: '0.04em' }}>
+          {lbl.guestsHelper}
+        </span>
       </label>
 
       <label style={labelStyle}>

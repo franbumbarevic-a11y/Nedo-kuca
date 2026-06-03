@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { isValidLocale, Locale, t } from '@/lib/i18n';
 import { images } from '@/lib/images';
 import { fetchBookedRanges } from '@/lib/ical';
@@ -7,6 +8,17 @@ import BookingForm from '@/components/BookingForm';
 
 interface Props {
   params: Promise<{ locale: string }>;
+}
+
+const PAGE_TITLE: Record<string, string> = {
+  hr: 'Rezervacija | Krcka kuća',
+  de: 'Buchungsanfrage | Krcka kuća',
+  en: 'Booking | Krcka kuća',
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return { title: PAGE_TITLE[locale] ?? 'Rezervacija | Krcka kuća' };
 }
 
 export default async function BookNowPage({ params }: Props) {
@@ -79,11 +91,24 @@ export default async function BookNowPage({ params }: Props) {
             fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
             fontFamily: "'Playfair Display', Georgia, serif",
             color: 'var(--ink)',
-            marginBottom: '2.5rem',
+            marginBottom: '1rem',
           }}
         >
           {t(locale, 'book_title')}
         </h2>
+
+        <p
+          style={{
+            fontSize: '0.8rem',
+            color: 'var(--ink)',
+            opacity: 0.5,
+            fontFamily: "'Inter', sans-serif",
+            letterSpacing: '0.04em',
+            marginBottom: '2rem',
+          }}
+        >
+          {t(locale, 'book_checkin_info')}
+        </p>
 
         <BookingForm bookedRanges={bookedRanges} locale={locale} />
       </div>

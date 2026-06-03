@@ -1,11 +1,23 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { isValidLocale, Locale, t } from '@/lib/i18n';
 import { images } from '@/lib/images';
 
 interface Props {
   params: Promise<{ locale: string }>;
+}
+
+const PAGE_TITLE: Record<string, string> = {
+  hr: 'Lokacija | Krcka kuća',
+  de: 'Lage | Krcka kuća',
+  en: 'Location | Krcka kuća',
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return { title: PAGE_TITLE[locale] ?? 'Lokacija | Krcka kuća' };
 }
 
 export default async function LocationPage({ params }: Props) {
@@ -15,12 +27,13 @@ export default async function LocationPage({ params }: Props) {
   const base = `/${locale}`;
 
   const distances = [
+    { label: t(locale, 'location_d6'), val: t(locale, 'location_d6_val') },
+    { label: t(locale, 'location_d7'), val: t(locale, 'location_d7_val') },
     { label: t(locale, 'location_d1'), val: t(locale, 'location_d1_val') },
-    { label: t(locale, 'location_d2'), val: t(locale, 'location_d2_val') },
     { label: t(locale, 'location_d3'), val: t(locale, 'location_d3_val') },
+    { label: t(locale, 'location_d2'), val: t(locale, 'location_d2_val') },
     { label: t(locale, 'location_d4'), val: t(locale, 'location_d4_val') },
     { label: t(locale, 'location_d5'), val: t(locale, 'location_d5_val') },
-    { label: t(locale, 'location_d6'), val: t(locale, 'location_d6_val') },
   ];
 
   const activities = [
