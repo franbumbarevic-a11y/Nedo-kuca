@@ -17,9 +17,18 @@ const PAGE_TITLE: Record<string, string> = {
   en: 'Krcka kuća — Skrbčići, island of Krk',
 };
 
+const PAGE_DESCRIPTION: Record<string, string> = {
+  hr: 'Kamena kuća iz 1908. na otoku Krku. Debeli kameni zidovi, privatni vrt s maslinama i smokvama, terasa s pogledom na more. Najam do 4 gosta — Skrbčići, Hrvatska.',
+  de: 'Steinhaus aus dem Jahr 1908 auf der Insel Krk. Dicke Steinwände, privater Garten mit Oliven und Feigen, Terrasse mit Meerblick. Ferienvermietung für bis zu 4 Gäste — Skrbčići, Kroatien.',
+  en: 'Traditional stone house built in 1908 on the island of Krk, Croatia. Thick stone walls, private garden with figs and olives, sea-view terrace. Holiday rental for up to 4 guests — Skrbčići.',
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  return { title: PAGE_TITLE[locale] ?? 'Krcka kuća — Skrbčići, otok Krk' };
+  return {
+    title: PAGE_TITLE[locale] ?? 'Krcka kuća — Skrbčići, otok Krk',
+    description: PAGE_DESCRIPTION[locale] ?? PAGE_DESCRIPTION.en,
+  };
 }
 
 export default async function HomePage({ params }: Props) {
@@ -52,8 +61,51 @@ export default async function HomePage({ params }: Props) {
     },
   ];
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'LodgingBusiness',
+    name: 'Krcka kuća',
+    description: PAGE_DESCRIPTION[locale] ?? PAGE_DESCRIPTION.en,
+    url: `https://nedo-kuca.vercel.app/${locale}`,
+    email: 'info@krcka-kuca.hr',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Skrbčići',
+      addressLocality: 'Krk',
+      addressRegion: 'Primorsko-goranska županija',
+      addressCountry: 'HR',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 45.08,
+      longitude: 14.53,
+    },
+    numberOfRooms: 2,
+    occupancy: { '@type': 'QuantitativeValue', maxValue: 4 },
+    petsAllowed: true,
+    amenityFeature: [
+      { '@type': 'LocationFeatureSpecification', name: 'WiFi', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Private parking', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Garden', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Terrace', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Fireplace', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'BBQ', value: true },
+    ],
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '5.0',
+      reviewCount: '8',
+      bestRating: '5',
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Section 1: Bento Hero */}
       <section style={{ position: 'relative' }}>
         <BentoHero images={heroImages} title={t(locale, 'home_title')} />

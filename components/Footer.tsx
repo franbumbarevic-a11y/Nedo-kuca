@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Locale, t } from '@/lib/i18n';
+import FooterEmail from '@/components/FooterEmail';
 
 interface Props {
   locale: Locale;
@@ -81,9 +82,7 @@ export default function Footer({ locale }: Props) {
 
         {/* Contact */}
         <div style={{ fontSize: '0.875rem', color: 'var(--stone)', opacity: 0.7 }}>
-          <a href={`mailto:${t(locale, 'footer_email')}`}>
-            {t(locale, 'footer_email')}
-          </a>
+          <FooterEmail style={{ color: 'var(--stone)' }} />
         </div>
       </div>
     </footer>

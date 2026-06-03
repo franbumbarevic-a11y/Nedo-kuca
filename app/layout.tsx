@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Krcka kuća — Skrbčići, otok Krk",
-  description: "Traditional stone house from 1908 on the island of Krk, Croatia. Available for holiday rental.",
+  description: "Traditional stone house built in 1908 on the island of Krk, Croatia. Thick stone walls, private garden with figs and olives, sea-view terrace. Holiday rental for up to 4 guests.",
   icons: {
     icon: "/favicon.ico",
   },
