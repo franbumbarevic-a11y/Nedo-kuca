@@ -1,24 +1,80 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-export async function POST(req: NextRequest) {
-  const data = await req.json();
-  const { name, email, phone, checkin, checkout, guests, message } = data;
+// ── Rate limiting (in-memory, best-effort across serverless instances) ─────
+const rateMap = new Map<string, { count: number; reset: number }>();
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX = 4;
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
-  function fmtDate(iso: string): string {
-    if (!iso) return '—';
-    const [y, m, d] = iso.split('-').map(Number);
-    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    return `${d}. ${months[m - 1]} ${y}`;
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateMap.get(ip);
+  if (!entry || now > entry.reset) {
+    rateMap.set(ip, { count: 1, reset: now + RATE_WINDOW_MS });
+    return false;
   }
+  if (entry.count >= RATE_MAX) return true;
+  entry.count++;
+  return false;
+}
+
+// ── HTML escape — never interpolate user input raw into HTML ───────────────
+function h(val: unknown): string {
+  if (val == null || val === '') return '—';
+  return String(val)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
+// ── Date formatter (only called with already-validated dates) ─────────────
+function fmtDate(iso: string | null): string {
+  if (!iso) return '—';
+  const [y, m, d] = iso.split('-').map(Number);
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${d}. ${months[m - 1]} ${y}`;
+}
+
+export async function POST(req: NextRequest) {
+  // Rate limit by IP
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ ok: false }, { status: 429 });
+  }
+
+  // Parse body
+  let raw: Record<string, unknown>;
+  try {
+    raw = await req.json();
+  } catch {
+    return NextResponse.json({ ok: false }, { status: 400 });
+  }
+
+  // Sanitise and enforce length limits
+  const name    = String(raw.name    ?? '').trim().slice(0, 200);
+  const email   = String(raw.email   ?? '').trim().slice(0, 200);
+  const phone   = String(raw.phone   ?? '').trim().slice(0, 50);
+  const message = String(raw.message ?? '').trim().slice(0, 3000);
+  const guests  = String(raw.guests  ?? '').trim();
+
+  // Validate required fields
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if (!name || !email || !emailRe.test(email)) {
+    return NextResponse.json({ ok: false }, { status: 400 });
+  }
+
+  // Validate guests (select is 1-4, enforce server-side)
+  const guestsNum = Number(guests);
+  if (!Number.isInteger(guestsNum) || guestsNum < 1 || guestsNum > 4) {
+    return NextResponse.json({ ok: false }, { status: 400 });
+  }
+
+  // Validate date format (YYYY-MM-DD only)
+  const dateRe = /^\d{4}-\d{2}-\d{2}$/;
+  const checkin  = typeof raw.checkin  === 'string' && dateRe.test(raw.checkin)  ? raw.checkin  : null;
+  const checkout = typeof raw.checkout === 'string' && dateRe.test(raw.checkout) ? raw.checkout : null;
 
   const nights =
     checkin && checkout
@@ -77,25 +133,25 @@ export async function POST(req: NextRequest) {
                 <tr>
                   <td style="padding:8px 0;border-bottom:1px solid #f0ede8;">
                     <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8a8a88;font-family:'Georgia',serif;display:inline-block;width:110px;">Name</span>
-                    <span style="font-size:15px;color:#1c1c1a;font-family:'Georgia',serif;">${name ?? '—'}</span>
+                    <span style="font-size:15px;color:#1c1c1a;font-family:'Georgia',serif;">${h(name)}</span>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:8px 0;border-bottom:1px solid #f0ede8;">
                     <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8a8a88;font-family:'Georgia',serif;display:inline-block;width:110px;">Email</span>
-                    <span style="font-size:15px;color:#1c1c1a;font-family:'Georgia',serif;">${email ?? '—'}</span>
+                    <span style="font-size:15px;color:#1c1c1a;font-family:'Georgia',serif;">${h(email)}</span>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:8px 0;border-bottom:1px solid #f0ede8;">
                     <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8a8a88;font-family:'Georgia',serif;display:inline-block;width:110px;">Phone</span>
-                    <span style="font-size:15px;color:#1c1c1a;font-family:'Georgia',serif;">${phone || '—'}</span>
+                    <span style="font-size:15px;color:#1c1c1a;font-family:'Georgia',serif;">${h(phone)}</span>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:8px 0;">
                     <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8a8a88;font-family:'Georgia',serif;display:inline-block;width:110px;">Guests</span>
-                    <span style="font-size:15px;color:#1c1c1a;font-family:'Georgia',serif;">${guests ?? '—'}</span>
+                    <span style="font-size:15px;color:#1c1c1a;font-family:'Georgia',serif;">${h(guestsNum)}</span>
                   </td>
                 </tr>
               </table>
@@ -108,7 +164,7 @@ export async function POST(req: NextRequest) {
             <td style="padding:24px 40px 0;">
               <p style="margin:0 0 10px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#8a8a88;font-family:'Georgia',serif;">Message</p>
               <div style="background:#f9f7f4;border-radius:3px;padding:16px 18px;">
-                <p style="margin:0;font-size:15px;color:#1c1c1a;font-family:'Georgia',serif;line-height:1.7;white-space:pre-wrap;">${message}</p>
+                <p style="margin:0;font-size:15px;color:#1c1c1a;font-family:'Georgia',serif;line-height:1.7;white-space:pre-wrap;">${h(message)}</p>
               </div>
             </td>
           </tr>
@@ -131,17 +187,25 @@ export async function POST(req: NextRequest) {
 </body>
 </html>`;
 
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
   try {
     await transporter.sendMail({
       from: `"Krcka kuća" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_TO ?? process.env.EMAIL_USER,
       replyTo: email,
-      subject: `Booking enquiry – ${fmtDate(checkin)} → ${fmtDate(checkout)} · ${name}`,
+      subject: `Booking enquiry – ${fmtDate(checkin)} → ${fmtDate(checkout)} · ${name.replace(/[\r\n]/g, ' ')}`,
       html,
     });
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error('Email send error:', err);
-    return NextResponse.json({ ok: false, error: 'Failed to send email' }, { status: 500 });
+    return NextResponse.json({ ok: false }, { status: 500 });
   }
 }

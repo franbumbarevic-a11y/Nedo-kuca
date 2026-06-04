@@ -1,5 +1,4 @@
-const ICAL_URL =
-  'https://hr.airbnb.com/calendar/ical/1218273079060429694.ics?t=5f8e685f8355489a8ea43742cc0331dc';
+const ICAL_URL = process.env.AIRBNB_ICAL_URL ?? '';
 
 export interface BookedRange {
   start: string; // YYYY-MM-DD
