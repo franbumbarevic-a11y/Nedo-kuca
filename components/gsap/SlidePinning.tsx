@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import { ImageEntry } from '@/lib/images';
 
@@ -8,6 +9,7 @@ interface Panel {
   title: string;
   text: string;
   image: ImageEntry;
+  extra?: ReactNode;
 }
 
 interface Props {
@@ -35,7 +37,9 @@ export default function SlidePinning({ panels }: Props) {
         if (!wrapper) return;
 
         const allPanels = gsap.utils.toArray<HTMLElement>('.kk-slide', wrapper);
-        const animPanels = allPanels.slice(0, -1);
+        // Last real panel + terminal are excluded — last panel holds the CTA/footer
+        // and must not be pinned so content can scroll freely after it.
+        const animPanels = allPanels.slice(0, -2);
 
         allPanels.forEach((p, i) => { p.style.zIndex = String(i + 1); });
 
@@ -162,36 +166,41 @@ export default function SlidePinning({ panels }: Props) {
 
   return (
     <div ref={wrapperRef}>
-      {panels.map((panel, i) => (
-        <section
-          key={i}
-          className="kk-slide"
-          style={{
-            /* Must be exact, not min-height — the fakeScrollRatio math
-               depends on panelHeight === windowHeight when content fits */
-            width: '100%',
-            height: '100vh',
-            overflow: 'hidden',
-            borderRadius: '8px',
-            position: 'relative',
-            background: i % 2 === 0 ? 'var(--stone)' : 'var(--mist)',
-          }}
-        >
-          <div
-            className="kk-slide-inner"
+      {panels.map((panel, i) => {
+        const isLast = i === panels.length - 1;
+        return (
+          <section
+            key={i}
+            className="kk-slide"
             style={{
-              height: '100%',
-              overflow: 'hidden',
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
+              width: '100%',
+              /* Pinned panels must be exactly 100vh — last panel is not pinned
+                 so it can grow to hold the CTA and footer below the grid. */
+              height: isLast ? 'auto' : '100vh',
+              minHeight: isLast ? '100vh' : undefined,
+              overflow: isLast ? 'visible' : 'hidden',
+              borderRadius: '8px',
+              position: 'relative',
+              background: i % 2 === 0 ? 'var(--stone)' : 'var(--mist)',
             }}
           >
-            {panelContent(panel, i)}
-          </div>
-        </section>
-      ))}
+            <div
+              className="kk-slide-inner"
+              style={{
+                height: '100vh',
+                overflow: 'hidden',
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+              }}
+            >
+              {panelContent(panel, i)}
+            </div>
+            {isLast && panel.extra}
+          </section>
+        );
+      })}
 
-      {/* Terminal slide — popped from array, never pinned, gives scroll room */}
+      {/* Terminal slide — never pinned, gives GSAP scroll room after the last animated panel */}
       <section
         className="kk-slide"
         aria-hidden="true"

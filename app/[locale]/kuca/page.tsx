@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { isValidLocale, Locale, t } from '@/lib/i18n';
 import { images } from '@/lib/images';
 import SlidePinning from '@/components/gsap/SlidePinning';
+import Footer from '@/components/Footer';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -47,6 +48,40 @@ export default async function HousePage({ params }: Props) {
       title: t(locale, 'house_p4_title'),
       text: t(locale, 'house_p4_text'),
       image: images.terrace,
+      extra: (
+        <>
+          <section
+            style={{
+              background: 'var(--stone)',
+              padding: 'clamp(4rem, 8vw, 8rem) clamp(1.5rem, 10vw, 12rem)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: '2rem',
+            }}
+          >
+            <p style={{ fontSize: '1rem', color: 'var(--ink)', opacity: 0.6 }}>
+              {t(locale, 'house_price')}
+            </p>
+            <Link
+              href={`${base}/book-now`}
+              style={{
+                display: 'inline-block',
+                background: 'var(--blue-dark)',
+                color: 'var(--stone)',
+                padding: '1rem 2.5rem',
+                fontSize: '0.875rem',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                fontWeight: 500,
+              }}
+            >
+              {t(locale, 'house_book_btn')}
+            </Link>
+          </section>
+          <Footer locale={locale} />
+        </>
+      ),
     },
   ];
 
@@ -78,6 +113,9 @@ export default async function HousePage({ params }: Props) {
 
   return (
     <>
+      {/* Hide the layout footer — it lives inside slide 4 on this page */}
+      <style>{'.site-footer { display: none }'}</style>
+
       {/* Hero */}
       <section style={{ position: 'relative', height: '90vh', overflow: 'hidden' }}>
         <Image
@@ -221,40 +259,8 @@ export default async function HousePage({ params }: Props) {
         </h2>
       </section>
 
-      {/* Narrative scroll: SlidePinning */}
+      {/* Narrative scroll: CTA + Footer live inside slide 4 */}
       <SlidePinning panels={panels} />
-
-      {/* Pricing + Book CTA */}
-      <section
-        style={{
-          background: 'var(--stone)',
-          padding: 'clamp(4rem, 8vw, 8rem) clamp(1.5rem, 10vw, 12rem)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: '2rem',
-        }}
-      >
-        <p style={{ fontSize: '1rem', color: 'var(--ink)', opacity: 0.6 }}>
-          {t(locale, 'house_price')}
-        </p>
-        <Link
-          href={`${base}/book-now`}
-          style={{
-            display: 'inline-block',
-            background: 'var(--blue-dark)',
-            color: 'var(--stone)',
-            padding: '1rem 2.5rem',
-            fontSize: '0.875rem',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            fontWeight: 500,
-          }}
-        >
-          {t(locale, 'house_book_btn')}
-        </Link>
-      </section>
-
     </>
   );
 }
