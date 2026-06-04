@@ -140,12 +140,12 @@ export default function SlidePinning({ panels }: Props) {
     );
 
     const imgBlock = (
-      <div style={{ position: 'relative', height: '100%' }}>
+      <div className="kk-slide-img" style={{ position: 'relative', height: '100%' }}>
         <Image
           src={panel.image.src}
           alt={panel.image.alt}
           fill
-          sizes="50vw"
+          sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover"
         />
       </div>

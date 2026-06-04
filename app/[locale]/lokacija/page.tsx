@@ -167,6 +167,7 @@ export default async function LocationPage({ params }: Props) {
       {/* Map — between distances and activities */}
       <section style={{ background: 'var(--stone)', padding: '0 4vw clamp(4rem, 6vw, 6rem)' }}>
         <div
+          className="location-map"
           style={{
             width: '100%',
             aspectRatio: '16/7',
@@ -266,7 +267,7 @@ export default async function LocationPage({ params }: Props) {
                       textDecoration: 'none',
                     }}
                   >
-                    {act.url.includes('sotours') ? '→ So Tours' : '→ Camino Krk'}
+                    {act.url.includes('sotours') ? '→ Šotours' : '→ Camino Krk'}
                   </a>
                 )}
               </div>

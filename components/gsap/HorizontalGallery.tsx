@@ -106,7 +106,7 @@ export default function HorizontalGallery({ images, id }: Props) {
               src={img.src}
               alt={img.alt}
               fill
-              sizes="30vw"
+              sizes="(max-width: 768px) 80vw, 30vw"
               className="object-cover"
             />
           </div>

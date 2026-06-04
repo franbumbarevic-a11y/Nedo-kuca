@@ -234,10 +234,50 @@ img {
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  /* Bento: reset all grid-area assignments, use uniform auto-row grid */
   .gallery--bento {
-    grid-template-columns: repeat(2, 48vw);
-    grid-template-rows: repeat(3, 30vh);
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: unset !important;
+    grid-auto-rows: 44vw !important;
+    gap: 2px !important;
   }
+  .gallery--bento .gallery__item {
+    grid-area: auto !important;
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+  .gallery--bento .gallery__item:nth-child(1) { grid-row: span 2 !important; }
+  .gallery--bento .gallery__item:nth-child(6) { grid-column: span 2 !important; }
+
+  /* Rolling text: scale down so longest line fits on narrow screens */
+  .rolling-line {
+    font-size: clamp(1.6rem, 6.5vw, 10vw) !important;
+  }
+  .rolling-tube {
+    height: 14vw !important;
+  }
+
+  /* Slide stacking: 1-column, auto height */
+  .kk-slide {
+    height: auto !important;
+    min-height: unset !important;
+    overflow: visible !important;
+    border-radius: 0 !important;
+  }
+  .kk-slide-inner {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+  }
+  .kk-slide-img {
+    height: 62vw !important;
+    overflow: hidden !important;
+  }
+
+  /* Location map: taller on mobile */
+  .location-map {
+    aspect-ratio: 4/3 !important;
+  }
+
   .nav-island {
     padding: 0.5rem 1rem;
   }

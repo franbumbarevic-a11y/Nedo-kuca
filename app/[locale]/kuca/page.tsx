@@ -151,7 +151,8 @@ export default async function HousePage({ params }: Props) {
 
       {/* Combined Specs + Amenities Table */}
       <section style={{ background: 'var(--stone)', padding: 'clamp(3rem, 6vw, 6rem) clamp(1.5rem, 10vw, 12rem)' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '480px' }}>
           <thead>
             <tr>
               <th
@@ -199,7 +200,6 @@ export default async function HousePage({ params }: Props) {
                     fontSize: '1rem',
                     color: 'var(--ink)',
                     opacity: 0.65,
-                    whiteSpace: 'nowrap',
                   }}
                 >
                   {spec.label}
@@ -231,6 +231,7 @@ export default async function HousePage({ params }: Props) {
             ))}
           </tbody>
         </table>
+        </div>
       </section>
 
       {/* About title */}
