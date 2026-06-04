@@ -113,9 +113,6 @@ export default async function HousePage({ params }: Props) {
 
   return (
     <>
-      {/* Hide the layout footer — it lives inside slide 4 on this page */}
-      <style>{'.site-footer { display: none }'}</style>
-
       {/* Hero */}
       <section style={{ position: 'relative', height: '90vh', overflow: 'hidden' }}>
         <Image

@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
 import { isValidLocale, Locale, t } from '@/lib/i18n';
 import NavIsland from '@/components/gsap/NavIsland';
 import Footer from '@/components/Footer';
@@ -16,6 +17,8 @@ export default async function LocaleLayout({ children, params }: Props) {
   }
 
   const locale = rawLocale as Locale;
+  const pathname = (await headers()).get('x-pathname') ?? '';
+  const showFooter = !pathname.endsWith('/kuca');
 
   return (
     <>
@@ -29,7 +32,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         }}
       />
       <main>{children}</main>
-      <Footer locale={locale} />
+      {showFooter && <Footer locale={locale} />}
     </>
   );
 }
