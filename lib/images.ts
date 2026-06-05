@@ -1,6 +1,5 @@
 export interface ImageEntry {
   src: string;
-  mobileSrc?: string;
   alt: string;
   width: number;
   height: number;

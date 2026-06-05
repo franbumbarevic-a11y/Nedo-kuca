@@ -278,6 +278,12 @@ img {
     aspect-ratio: 4/3 !important;
   }
 
+  /* Booking calendar: stack the two months so day cells stay tappable */
+  .book-cal-months {
+    flex-direction: column !important;
+    gap: 2rem !important;
+  }
+
   .nav-island {
     padding: 0.5rem 1rem;
   }

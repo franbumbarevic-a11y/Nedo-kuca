@@ -465,7 +465,7 @@ export default function BookingForm({ bookedRanges, locale }: Props) {
         </div>
 
         {/* Two months */}
-        <div style={{ display: 'flex', gap: '1.5rem' }}>
+        <div className="book-cal-months" style={{ display: 'flex', gap: '1.5rem' }}>
           <CalMonth
             year={calYear} month={calMonth}
             checkin={checkin} checkout={checkout} hover={hover}

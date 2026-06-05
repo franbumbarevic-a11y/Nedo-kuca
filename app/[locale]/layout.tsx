@@ -3,6 +3,7 @@ import { headers } from 'next/headers';
 import { isValidLocale, Locale, t } from '@/lib/i18n';
 import NavIsland from '@/components/gsap/NavIsland';
 import Footer from '@/components/Footer';
+import HtmlLang from '@/components/HtmlLang';
 
 interface Props {
   children: React.ReactNode;
@@ -22,6 +23,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <>
+      <HtmlLang locale={locale} />
       <NavIsland
         locale={locale}
         labels={{

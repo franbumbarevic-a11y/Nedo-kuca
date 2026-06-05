@@ -54,7 +54,7 @@ export default async function LocationPage({ params }: Props) {
     {
       title: t(locale, 'location_island_title'),
       text: t(locale, 'location_island_text'),
-      image: { src: '/images/sotours-boat.webp', alt: 'Boat rental — So Tours, Valbiska' },
+      image: { src: '/images/sotours-boat.webp', alt: 'Boat rental — Šotours, Sv. Fuska, Pinezići' },
       reverse: false,
       url: 'https://www.sotours.hr/en',
     },
