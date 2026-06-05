@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Booking Enquiry – Krcka kuća</title>
+<title>Booking Enquiry – Krčka kuća</title>
 </head>
 <body style="margin:0;padding:0;background:#f5f3ee;font-family:'Georgia',serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f3ee;padding:40px 20px;">
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
           <!-- Header -->
           <tr>
             <td style="background:#4A7A91;padding:36px 40px;">
-              <p style="margin:0 0 4px;font-family:'Georgia',serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.65);">Krcka kuća · Skrbčići, otok Krk</p>
+              <p style="margin:0 0 4px;font-family:'Georgia',serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.65);">Krčka kuća · Skrbčići, otok Krk</p>
               <h1 style="margin:0;font-family:'Georgia',serif;font-size:26px;font-weight:400;color:#ffffff;line-height:1.3;">New Booking Enquiry</h1>
             </td>
           </tr>
@@ -175,7 +175,7 @@ export async function POST(req: NextRequest) {
             <td style="padding:32px 40px 36px;">
               <hr style="border:none;border-top:1px solid #e8e4dd;margin:0 0 24px;" />
               <p style="margin:0;font-size:11px;color:#8a8a88;font-family:'Georgia',serif;line-height:1.6;">
-                Krcka kuća · Skrbčići 20, Otok Krk, Hrvatska
+                Krčka kuća · Skrbčići 20, Otok Krk, Hrvatska
               </p>
             </td>
           </tr>
@@ -197,7 +197,7 @@ export async function POST(req: NextRequest) {
 
   try {
     await transporter.sendMail({
-      from: `"Krcka kuća" <${process.env.EMAIL_USER}>`,
+      from: `"Krčka kuća" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_TO ?? process.env.EMAIL_USER,
       replyTo: email,
       subject: `Booking enquiry – ${fmtDate(checkin)} → ${fmtDate(checkout)} · ${name.replace(/[\r\n]/g, ' ')}`,

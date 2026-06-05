@@ -14,8 +14,8 @@ export interface GalleryItem {
 
 export const images = {
   // Exterior / approach
-  exterior:              { src: '/images/Krcka-kuca-1-Kuca-od-tete-Marije-i-barba-Osipa-Skrbcici-20-scaled.webp',                       alt: 'Krcka kuća — stone facade, Skrbčići',               width: 2560, height: 1709 },
-  gate:                  { src: '/images/Krcka-kuca-1-eksterijer-ulazna-kapija-scaled.webp',                                             alt: 'Entry gate to Krcka kuća',                           width: 2560, height: 1709 },
+  exterior:              { src: '/images/Krcka-kuca-1-Kuca-od-tete-Marije-i-barba-Osipa-Skrbcici-20-scaled.webp',                       alt: 'Krčka kuća — stone facade, Skrbčići',               width: 2560, height: 1709 },
+  gate:                  { src: '/images/Krcka-kuca-1-eksterijer-ulazna-kapija-scaled.webp',                                             alt: 'Entry gate to Krčka kuća',                           width: 2560, height: 1709 },
   viewThroughDoor:       { src: '/images/Krcka-kuca-1-pogled-kroz-vrata-na-vrt-scaled.webp',                                             alt: 'View through door to the garden',                    width: 2560, height: 1709 },
 
   // Outdoor / garden / terrace
@@ -72,7 +72,7 @@ export const images = {
   wc:                    { src: '/images/Krcka-kuca-1-WC-za-sobe-na-katu-scaled.webp',                                                   alt: 'WC for upstairs bedrooms',                           width: 2560, height: 1709 },
 
   // Kept as alias so lokacija page still works
-  parking:               { src: '/images/Krcka-kuca-1-eksterijer-ulazna-kapija-scaled.webp',                                             alt: 'Krcka kuća — entrance',                              width: 2560, height: 1709 },
+  parking:               { src: '/images/Krcka-kuca-1-eksterijer-ulazna-kapija-scaled.webp',                                             alt: 'Krčka kuća — entrance',                              width: 2560, height: 1709 },
 } satisfies Record<string, ImageEntry>;
 
 // ── Curated sets for specific page sections ─────────────────────────────────

@@ -9,14 +9,14 @@ interface Props {
 }
 
 const PAGE_TITLE: Record<string, string> = {
-  hr: 'Galerija | Krcka kuća',
-  de: 'Galerie | Krcka kuća',
-  en: 'Gallery | Krcka kuća',
+  hr: 'Galerija | Krčka kuća',
+  de: 'Galerie | Krčka kuća',
+  en: 'Gallery | Krčka kuća',
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  return { title: PAGE_TITLE[locale] ?? 'Galerija | Krcka kuća' };
+  return { title: PAGE_TITLE[locale] ?? 'Galerija | Krčka kuća' };
 }
 
 export default async function GalleryPage({ params }: Props) {

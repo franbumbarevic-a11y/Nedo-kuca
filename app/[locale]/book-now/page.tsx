@@ -11,14 +11,14 @@ interface Props {
 }
 
 const PAGE_TITLE: Record<string, string> = {
-  hr: 'Rezervacija | Krcka kuća',
-  de: 'Buchungsanfrage | Krcka kuća',
-  en: 'Booking | Krcka kuća',
+  hr: 'Rezervacija | Krčka kuća',
+  de: 'Buchungsanfrage | Krčka kuća',
+  en: 'Booking | Krčka kuća',
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  return { title: PAGE_TITLE[locale] ?? 'Rezervacija | Krcka kuća' };
+  return { title: PAGE_TITLE[locale] ?? 'Rezervacija | Krčka kuća' };
 }
 
 export default async function BookNowPage({ params }: Props) {
@@ -68,7 +68,7 @@ export default async function BookNowPage({ params }: Props) {
               marginBottom: '0.75rem',
             }}
           >
-            Krcka kuća
+            Krčka kuća
           </h1>
           <p style={{ fontSize: '0.9rem', color: 'var(--stone)', opacity: 0.7 }}>
             {t(locale, 'book_location')}

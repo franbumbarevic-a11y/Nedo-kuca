@@ -32,7 +32,7 @@ export default function Footer({ locale }: Props) {
               color: 'var(--stone)',
             }}
           >
-            Krcka kuća
+            Krčka kuća
           </span>
           <p
             style={{

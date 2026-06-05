@@ -53,7 +53,7 @@ export default function NotFound() {
           marginTop: '0.5rem',
         }}
       >
-        Krcka kuća →
+        Krčka kuća →
       </Link>
     </div>
   );

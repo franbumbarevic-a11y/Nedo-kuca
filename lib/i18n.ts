@@ -12,7 +12,7 @@ const translations = {
     nav_book: 'Rezerviraj →',
 
     // Home hero
-    home_title: 'Krcka kuća',
+    home_title: 'Krčka kuća',
 
     // Rolling text
     rolling_1: 'Sagrađena 1908.',
@@ -38,7 +38,7 @@ const translations = {
 
     // Gallery page
     gallery_title: 'Galerija',
-    gallery_subtitle: 'Krcka kuća u slikama',
+    gallery_subtitle: 'Krčka kuća u slikama',
 
     // Location page
     location_title: 'Skrbčići',
@@ -146,7 +146,7 @@ const translations = {
     nav_house: 'Haus',
     nav_book: 'Buchen →',
 
-    home_title: 'Krcka kuća',
+    home_title: 'Krčka kuća',
 
     rolling_1: 'Gebaut 1908.',
     rolling_2: 'Still. Steinern. Ihres.',
@@ -167,7 +167,7 @@ const translations = {
     book_cta_btn: 'Buchen →',
 
     gallery_title: 'Galerie',
-    gallery_subtitle: 'Krcka kuća in Bildern',
+    gallery_subtitle: 'Krčka kuća in Bildern',
 
     location_title: 'Skrbčići',
     location_subtitle: 'Ein ruhiges Dorf an der geschützten Westküste der Insel Krk.',
@@ -271,7 +271,7 @@ const translations = {
     nav_house: 'House',
     nav_book: 'Book now →',
 
-    home_title: 'Krcka kuća',
+    home_title: 'Krčka kuća',
 
     rolling_1: 'Built in 1908.',
     rolling_2: 'Quiet. Stone. Yours.',
@@ -292,7 +292,7 @@ const translations = {
     book_cta_btn: 'Book now →',
 
     gallery_title: 'Gallery',
-    gallery_subtitle: 'Krcka kuća in images',
+    gallery_subtitle: 'Krčka kuća in images',
 
     location_title: 'Skrbčići',
     location_subtitle: 'A quiet village on Krk\'s sheltered western coast.',

@@ -151,7 +151,7 @@ export default function NavIsland({ locale, labels }: Props) {
               letterSpacing: '-0.01em',
             }}
           >
-            Krcka kuća
+            Krčka kuća
           </Link>
 
           {/* Desktop nav links */}

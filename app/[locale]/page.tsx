@@ -12,9 +12,9 @@ interface Props {
 }
 
 const PAGE_TITLE: Record<string, string> = {
-  hr: 'Krcka kuća — Skrbčići, otok Krk',
-  de: 'Krcka kuća — Skrbčići, Insel Krk',
-  en: 'Krcka kuća — Skrbčići, island of Krk',
+  hr: 'Krčka kuća — Skrbčići, otok Krk',
+  de: 'Krčka kuća — Skrbčići, Insel Krk',
+  en: 'Krčka kuća — Skrbčići, island of Krk',
 };
 
 const PAGE_DESCRIPTION: Record<string, string> = {
@@ -26,7 +26,7 @@ const PAGE_DESCRIPTION: Record<string, string> = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: PAGE_TITLE[locale] ?? 'Krcka kuća — Skrbčići, otok Krk',
+    title: PAGE_TITLE[locale] ?? 'Krčka kuća — Skrbčići, otok Krk',
     description: PAGE_DESCRIPTION[locale] ?? PAGE_DESCRIPTION.en,
   };
 }
@@ -64,7 +64,7 @@ export default async function HomePage({ params }: Props) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'LodgingBusiness',
-    name: 'Krcka kuća',
+    name: 'Krčka kuća',
     description: PAGE_DESCRIPTION[locale] ?? PAGE_DESCRIPTION.en,
     url: `https://nedo-kuca.vercel.app/${locale}`,
     email: 'info@krcka-kuca.hr',

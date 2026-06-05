@@ -12,14 +12,14 @@ interface Props {
 }
 
 const PAGE_TITLE: Record<string, string> = {
-  hr: 'Kuća | Krcka kuća',
-  de: 'Haus | Krcka kuća',
-  en: 'House | Krcka kuća',
+  hr: 'Kuća | Krčka kuća',
+  de: 'Haus | Krčka kuća',
+  en: 'House | Krčka kuća',
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  return { title: PAGE_TITLE[locale] ?? 'Kuća | Krcka kuća' };
+  return { title: PAGE_TITLE[locale] ?? 'Kuća | Krčka kuća' };
 }
 
 export default async function HousePage({ params }: Props) {
