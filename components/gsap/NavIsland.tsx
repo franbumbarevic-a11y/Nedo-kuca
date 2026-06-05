@@ -91,6 +91,7 @@ export default function NavIsland({ locale, labels }: Props) {
 
   const base = `/${locale}`;
   const pathWithoutLocale = pathname.replace(/^\/(hr|de|en)/, '');
+  const onBookingPage = pathWithoutLocale === '/book-now';
 
   const navLinks = [
     { href: `${base}/galerija`, label: labels.gallery },
@@ -294,28 +295,30 @@ export default function NavIsland({ locale, labels }: Props) {
         ))}
       </div>
 
-      {/* ── Fixed bottom-right book button ── */}
-      <Link
-        href={`${base}/book-now`}
-        style={{
-          position: 'fixed',
-          bottom: '1.5rem',
-          right: '1.5rem',
-          zIndex: 1000,
-          background: 'var(--blue-dark)',
-          color: 'var(--stone)',
-          padding: '0.875rem 1.75rem',
-          borderRadius: '99px',
-          fontSize: '0.875rem',
-          letterSpacing: '0.08em',
-          textTransform: 'uppercase',
-          fontWeight: 500,
-          boxShadow: '0 4px 20px rgba(0,0,0,0.18)',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {labels.book}
-      </Link>
+      {/* ── Fixed bottom-right book button (hidden on the booking page) ── */}
+      {!onBookingPage && (
+        <Link
+          href={`${base}/book-now`}
+          style={{
+            position: 'fixed',
+            bottom: '1.5rem',
+            right: '1.5rem',
+            zIndex: 1000,
+            background: 'var(--blue-dark)',
+            color: 'var(--stone)',
+            padding: '0.875rem 1.75rem',
+            borderRadius: '99px',
+            fontSize: '0.875rem',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            fontWeight: 500,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.18)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {labels.book}
+        </Link>
+      )}
     </>
   );
 }
